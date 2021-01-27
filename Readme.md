@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
-* Студент: [Владислав Шамов](https://up.htmlacademy.ru/javascript/22/user/1582609).
-* Наставник: `Неизвестно`.
+- Студент: [Владислав Шамов](https://up.htmlacademy.ru/javascript/22/user/1582609).
+- Наставник: [Михаил Кислый](https://htmlacademy.ru/profile/smart-grizzly).
 
 ---
 
