@@ -1,4 +1,4 @@
-const OFFERS_COUNT = 10;
+const OFFERS_COUNT = 10
 
 const TITLES = [
   'Милая, уютная квартирка в Токио',
@@ -47,16 +47,11 @@ const PHOTOS =
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
 ]
 
+const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
 
-const getRandomNumber = function (min, max){
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+const getRandomNumberWithFloat = (min, max, floatSigns) => parseFloat((Math.random() * (max - min) + min).toFixed(floatSigns))
 
-const getRandomNumberWithFloat = function (min, max, floatSigns) {
-  return parseFloat((Math.random() * (max - min) + min).toFixed(floatSigns));
-}
-
-const addZeroes = function (n, neededLength = 2) {
+const addZeroes = (n, neededLength = 2) => {
   n = String(n);
   while (n.length < neededLength) {
     n = '0' + n;
@@ -64,20 +59,17 @@ const addZeroes = function (n, neededLength = 2) {
   return  n
 }
 
-const getRandomNumberWithZeroes = (min, max)  => addZeroes(getRandomNumber(min, max));
+const getRandomNumberWithZeroes = (min, max)  => addZeroes(getRandomNumber(min, max))
 
-const getRandomArrayElement = (arr) => arr[getRandomNumber(0, arr.length - 1)];
+const getRandomArrayElement = (arr) => arr[getRandomNumber(0, arr.length - 1)]
 
-const createUniqueArray = function (arr){
-  return Array.from(new Set(arr))
+const createUniqueArray = (arr) =>  Array.from(new Set(arr))
 
-}
+const createRandomLengthArrayUnique = (arr) => createUniqueArray(createRandomLengthArray(arr, arr.length))
 
-const createRandomLengthArrayUnique = (arr) => createUniqueArray(createRandomLengthArray(arr, arr.length));
-
-const createRandomLengthArray = function (arr, maxLength) {
+const createRandomLengthArray = (arr, maxLength) => {
   let createdArray = [];
-  let newArrayLength = getRandomNumber(1, maxLength);
+  let newArrayLength = getRandomNumber(1, maxLength)
 
   while(createdArray.length < newArrayLength){
     createdArray.push(getRandomArrayElement(arr))
@@ -86,7 +78,7 @@ const createRandomLengthArray = function (arr, maxLength) {
   return createdArray;
 };
 
-const getRandomLocation = function (minX, maxX, minY, maxY){
+const getRandomLocation =  (minX, maxX, minY, maxY) => {
   return {
     x: getRandomNumberWithFloat(minX, maxX, 5),
     y: getRandomNumberWithFloat(minY, maxY, 5),
@@ -95,8 +87,7 @@ const getRandomLocation = function (minX, maxX, minY, maxY){
 
 const getRandomLocationToString = (func) => Object.values(func).join(', ')
 
-
-let getRandomOffer = function () {
+let getRandomOffer = () => {
   return   {
     author: {
       avatar: 'img/avatars/user' + getRandomNumberWithZeroes(1, 8) + '.png' ,
@@ -111,16 +102,13 @@ let getRandomOffer = function () {
       checkin: getRandomArrayElement(CHECK_TIME),
       checkout: getRandomArrayElement(CHECK_TIME),
       features: createRandomLengthArrayUnique(FEATURES),
-      description:getRandomArrayElement(DESCRIPTIONS),
+      description: getRandomArrayElement(DESCRIPTIONS),
       photos: createRandomLengthArray(PHOTOS, 10),
     },
-    location:getRandomLocation(35.65000, 35.70000, 139.70000, 139.80000),
-
-
+    location: getRandomLocation(35.65000, 35.70000, 139.70000, 139.80000),
   }
-
 }
 
-
 let offer = new Array(OFFERS_COUNT).fill(null).map(() => getRandomOffer())
+
 alert(offer)
