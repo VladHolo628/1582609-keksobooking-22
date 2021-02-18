@@ -42,4 +42,7 @@ let getRandomOffer = () => {
 
 let offer = new Array(OFFERS_COUNT).fill(null).map(() => getRandomOffer())
 
-export {offer}
+export {offer, getRandomOffer}
+
+
+
