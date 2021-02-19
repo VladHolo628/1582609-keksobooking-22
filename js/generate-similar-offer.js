@@ -18,33 +18,80 @@ const generateSimilarOffer = () => {
   let cardPhotos = clonedCardTemplate.querySelector('.popup__photos')
   let cardPhoto = cardPhotos.querySelector('.popup__photo')
 
+  // Title
+  if (getRandomOffer().offer.title == '') {
+    cardTitle.style.display = 'none'
+  }
+
   cardTitle.textContent = getRandomOffer().offer.title
+
+  // Address
+  if (getRandomOffer().offer.address == '') {
+    cardAddress.style.display = 'none'
+  }
 
   cardAddress.textContent = getRandomOffer().offer.address
 
+  // Price
+  if (getRandomOffer().offer.price == '') {
+    cardPrice.style.display = 'none'
+  }
+
   cardPrice.textContent = `${getRandomOffer().offer.price} ₽/ночь`
+
+  // Type
+  if (getRandomOffer().offer.type == '') {
+    cardType.style.display = 'none'
+  }
 
   cardType.textContent = getRandomOffer().offer.type
 
+  // Capacity
+  if (getRandomOffer().offer.rooms || getRandomOffer().offer.guests == '') {
+    cardCapacity.style.display = 'none'
+  }
+
   cardCapacity.textContent = `${getRandomOffer().offer.rooms} комнаты для ${getRandomOffer().offer.guests} гостей`
+
+  // Time
+  if (getRandomOffer().offer.checkin || getRandomOffer().offer.checkout == '') {
+    cardTime.style.display = 'none'
+  }
 
   cardTime.textContent = `Заезд после ${getRandomOffer().offer.checkin}, выезд до ${getRandomOffer().offer.checkout}`
 
+  // Avatar
+  if (getRandomOffer().author.avatar == '') {
+    cardAvatar.style.display = 'none'
+  }
   cardAvatar.setAttribute('src', getRandomOffer().author.avatar )
+
 
   // Features
   cardFeatures.textContent = ''
+  if(getRandomOffer().offer.features == ''){
+    cardFeatures.style.display = 'none'
+  }
   getRandomOffer().offer.features.forEach( feature => {
     let newFeature = document.createElement('li')
     newFeature.classList.add('popup__feature', `popup__feature--${feature}`)
     cardFeatures.appendChild(newFeature)
   });
 
+  //Description
+  if(getRandomOffer().offer.description == ''){
+    cardDescription.style.display = 'none'
+  }
+
   cardDescription.textContent = getRandomOffer().offer.description
 
   // Photos
   cardPhotos.textContent = ''
-  getRandomOffer().offer.photos.forEach( photo => {
+
+  if (getRandomOffer().offer.photos == '') {
+    cardPhotos.style.display = 'none'
+  }
+  getRandomOffer().offer.photos.forEach( photo  => {
     let newPhoto = cardPhoto.cloneNode(true)
     newPhoto.setAttribute('src', photo)
     cardPhotos.appendChild(newPhoto)
