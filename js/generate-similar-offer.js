@@ -61,7 +61,7 @@ const generateSimilarOffer = () => {
   cardTime.textContent = `Заезд после ${getRandomOffer().offer.checkin}, выезд до ${getRandomOffer().offer.checkout}`
 
   // Avatar
-  if (getRandomOffer().author.avatar === null) {
+  if (getRandomOffer().author.avatar === '') {
     cardAvatar.style.display = 'none'
   }
   cardAvatar.setAttribute('src', getRandomOffer().author.avatar )
