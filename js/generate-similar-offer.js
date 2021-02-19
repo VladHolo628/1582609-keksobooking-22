@@ -19,49 +19,49 @@ const generateSimilarOffer = () => {
   let cardPhoto = cardPhotos.querySelector('.popup__photo')
 
   // Title
-  if (getRandomOffer().offer.title == '') {
+  if (getRandomOffer().offer.title === null) {
     cardTitle.style.display = 'none'
   }
 
   cardTitle.textContent = getRandomOffer().offer.title
 
   // Address
-  if (getRandomOffer().offer.address == '') {
+  if (getRandomOffer().offer.address === null) {
     cardAddress.style.display = 'none'
   }
 
   cardAddress.textContent = getRandomOffer().offer.address
 
   // Price
-  if (getRandomOffer().offer.price == '') {
+  if (getRandomOffer().offer.price === null) {
     cardPrice.style.display = 'none'
   }
 
   cardPrice.textContent = `${getRandomOffer().offer.price} ₽/ночь`
 
   // Type
-  if (getRandomOffer().offer.type == '') {
+  if (getRandomOffer().offer.type === null) {
     cardType.style.display = 'none'
   }
 
   cardType.textContent = getRandomOffer().offer.type
 
   // Capacity
-  if (getRandomOffer().offer.rooms || getRandomOffer().offer.guests == '') {
+  if (getRandomOffer().offer.rooms || getRandomOffer().offer.guests === null) {
     cardCapacity.style.display = 'none'
   }
 
   cardCapacity.textContent = `${getRandomOffer().offer.rooms} комнаты для ${getRandomOffer().offer.guests} гостей`
 
   // Time
-  if (getRandomOffer().offer.checkin || getRandomOffer().offer.checkout == '') {
+  if (getRandomOffer().offer.checkin || getRandomOffer().offer.checkout === null) {
     cardTime.style.display = 'none'
   }
 
   cardTime.textContent = `Заезд после ${getRandomOffer().offer.checkin}, выезд до ${getRandomOffer().offer.checkout}`
 
   // Avatar
-  if (getRandomOffer().author.avatar == '') {
+  if (getRandomOffer().author.avatar === null) {
     cardAvatar.style.display = 'none'
   }
   cardAvatar.setAttribute('src', getRandomOffer().author.avatar )
@@ -69,7 +69,7 @@ const generateSimilarOffer = () => {
 
   // Features
   cardFeatures.textContent = ''
-  if(getRandomOffer().offer.features == ''){
+  if(getRandomOffer().offer.features === null){
     cardFeatures.style.display = 'none'
   }
   getRandomOffer().offer.features.forEach( feature => {
@@ -79,7 +79,7 @@ const generateSimilarOffer = () => {
   });
 
   //Description
-  if(getRandomOffer().offer.description == ''){
+  if(getRandomOffer().offer.description === null){
     cardDescription.style.display = 'none'
   }
 
@@ -88,7 +88,7 @@ const generateSimilarOffer = () => {
   // Photos
   cardPhotos.textContent = ''
 
-  if (getRandomOffer().offer.photos == '') {
+  if (getRandomOffer().offer.photos === null) {
     cardPhotos.style.display = 'none'
   }
   getRandomOffer().offer.photos.forEach( photo  => {
