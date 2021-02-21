@@ -1,42 +1,28 @@
-const bungalowMinPrice = '0'
-const flatMinPrice = '1000'
-const palaceMinPrice = '10000'
-const houseMinPrice = '5000'
+const roomsAndPrices = {
+  'bungalow': 0,
+  'flat': 1000,
+  'house': 5000,
+  'palace': 10000,
+};
 
-const offerType = document.querySelector('#type')
-const priceInput = document.querySelector('#price')
-const checkinTime = document.querySelector('#timein')
-const checkoutTime = document.querySelector('#timeout')
+const userForm = document.querySelector('.ad-form')
+const apartamentInput = userForm.querySelector('select[name="type"]')
+const priceInput = userForm.querySelector('input[name="price"]')
+const checkInInput = userForm.querySelector('select[name="timein"]')
+const checkOutInput = userForm.querySelector('select[name="timeout"]')
 
-priceInput.placeholder =  flatMinPrice
-priceInput.min = flatMinPrice
+priceInput.placeholder = roomsAndPrices[apartamentInput.value]
+priceInput.min = roomsAndPrices[apartamentInput.value]
 
-offerType.addEventListener('change', (evt) => {
-  if (evt.target.value === 'palace'){
-    priceInput.placeholder = palaceMinPrice
-    priceInput.min = palaceMinPrice
-  }
-
-  if (evt.target.value === 'flat'){
-    priceInput.placeholder = flatMinPrice
-    priceInput.min = flatMinPrice
-  }
-
-  if (evt.target.value === 'bungalow'){
-    priceInput.placeholder = bungalowMinPrice
-    priceInput.min = bungalowMinPrice
-  }
-
-  if (evt.target.value === 'house'){
-    priceInput.placeholder = houseMinPrice
-    priceInput.min = houseMinPrice
-  }
+apartamentInput.addEventListener('change', function () {
+  const minPrice = roomsAndPrices[apartamentInput.value];
+  priceInput.min = minPrice;
+  priceInput.placeholder = minPrice;
 });
 
-checkinTime.addEventListener('change', (evt) => {
-  checkoutTime.value = evt.target.value
+checkInInput.addEventListener('change', function () {
+  checkOutInput.selectedIndex = checkInInput.selectedIndex;
 });
-
-checkoutTime.addEventListener('change', (evt) => {
-  checkinTime.value = evt.target.value
+checkOutInput.addEventListener('change', function () {
+  checkInInput.selectedIndex = checkOutInput.selectedIndex;
 });
