@@ -10,6 +10,7 @@ const apartamentInput = userForm.querySelector('select[name="type"]')
 const priceInput = userForm.querySelector('input[name="price"]')
 const checkInInput = userForm.querySelector('select[name="timein"]')
 const checkOutInput = userForm.querySelector('select[name="timeout"]')
+const userFormFieldsets = userForm.querySelectorAll('fieldset')
 
 priceInput.placeholder = roomsAndPrices[apartamentInput.value]
 priceInput.min = roomsAndPrices[apartamentInput.value]
@@ -26,3 +27,12 @@ checkInInput.addEventListener('change', function () {
 checkOutInput.addEventListener('change', function () {
   checkInInput.selectedIndex = checkOutInput.selectedIndex;
 });
+
+const toggleUserFormState = () =>{
+  userForm.classList.toggle('ad-form--disabled')
+  userFormFieldsets.forEach( fieldset => {
+    fieldset.toggleAttribute('disabled', '')
+  })
+}
+
+export {toggleUserFormState}
