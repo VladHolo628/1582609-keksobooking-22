@@ -6,15 +6,19 @@ import './filter-handler.js'
 import './form-handler.js'
 import { toggleUserFormState } from './form-handler.js'
 import { toggleMapFilterState } from './filter-handler.js'
+
 const defaultLocation = {
   x: 35.6895000,
   y:139.6917100,
 
 }
 const zoom = 12
+const addressFloatLength = 5
 
 const mapContainer = document.querySelector('#map-canvas')
 const addressInput = document.querySelector('#address')
+
+addressInput.setAttribute('readonly', '')
 
 const onMapLoad = () => {
   toggleMapFilterState(),
@@ -28,13 +32,13 @@ map.on('load', onMapLoad)
 map.setView([defaultLocation.x, defaultLocation.y], zoom)
 
 const pinIcon = L.icon({
-  iconUrl: '../img/pin.svg',
+  iconUrl: 'img/pin.svg',
   iconSize: [52, 52],
   iconAnchor: [26, 52],
 })
 
 const mainPinIcon = L.icon({
-  iconUrl: '../img/main-pin.svg',
+  iconUrl: 'img/main-pin.svg',
   iconSize: [52, 52],
   iconAnchor: [26,52],
 })
@@ -80,8 +84,10 @@ const mainPinMarker = L.marker(
 )
 mainPinMarker.addTo(map)
 
-mainPinMarker.on('moveend', (evt) => {
-  addressInput.value =`${(evt.target.getLatLng().lat).toFixed(5)}, ${(evt.target.getLatLng().lng).toFixed(5)}`;
+addressInput.value = `${mainPinMarker.getLatLng().lat}, ${mainPinMarker.getLatLng().lng}`
+
+mainPinMarker.on('move', (evt) => {
+  addressInput.value =`${(evt.target.getLatLng().lat).toFixed(addressFloatLength)}, ${(evt.target.getLatLng().lng).toFixed(addressFloatLength)}`;
 });
 
 export { map }
