@@ -1,10 +1,6 @@
-import {getRandomOffer} from './get-random-offer.js'
-
 const cardTemplate = document.querySelector('#card').content
 
-getRandomOffer()
-
-const generateSimilarOffer = () => {
+const generateSimilarOffer = (offerItem) => {
   let clonedCardTemplate = cardTemplate.cloneNode(true)
   let cardAvatar = clonedCardTemplate.querySelector('.popup__avatar')
   let cardTitle = clonedCardTemplate.querySelector('.popup__title')
@@ -19,79 +15,83 @@ const generateSimilarOffer = () => {
   let cardPhoto = cardPhotos.querySelector('.popup__photo')
 
   // Title
-  if (getRandomOffer().offer.title === null) {
+  if (offerItem.offer.title === null) {
     cardTitle.style.display = 'none'
   }
 
-  cardTitle.textContent = getRandomOffer().offer.title
+  cardTitle.textContent = offerItem.offer.title
 
   // Address
-  if (getRandomOffer().offer.address === null) {
+  if (offerItem.offer.address === null) {
     cardAddress.style.display = 'none'
   }
 
-  cardAddress.textContent = getRandomOffer().offer.address
+  cardAddress.textContent = offerItem.offer.address
 
   // Price
-  if (getRandomOffer().offer.price === null) {
+  if (offerItem.offer.price === null) {
     cardPrice.style.display = 'none'
   }
 
-  cardPrice.textContent = `${getRandomOffer().offer.price} ₽/ночь`
+  cardPrice.textContent = `${offerItem.offer.price} ₽/ночь`
 
   // Type
-  if (getRandomOffer().offer.type === null) {
+  if (offerItem.offer.type === null) {
     cardType.style.display = 'none'
   }
+  offerItem.offer.type === 'bungalow'?cardType.textContent = 'Бунгало':
+    offerItem.offer.type === 'flat'?cardType.textContent = 'Квартира':
+      offerItem.offer.type === 'palace'?cardType.textContent = 'Дворец':
+        offerItem.offer.type === 'house'?cardType.textContent = 'Дом':
+          cardType.textContent = offerItem.offer.type;
 
-  cardType.textContent = getRandomOffer().offer.type
 
   // Capacity
-  if (getRandomOffer().offer.rooms || getRandomOffer().offer.guests === null) {
+  if (offerItem.offer.rooms || offerItem.offer.guests === null) {
     cardCapacity.style.display = 'none'
   }
 
-  cardCapacity.textContent = `${getRandomOffer().offer.rooms} комнаты для ${getRandomOffer().offer.guests} гостей`
+  cardCapacity.textContent = `${offerItem.offer.rooms} комнаты для ${offerItem.offer.guests} гостей`
 
   // Time
-  if (getRandomOffer().offer.checkin || getRandomOffer().offer.checkout === null) {
+  if (offerItem.offer.checkin || offerItem.offer.checkout === null) {
     cardTime.style.display = 'none'
   }
 
-  cardTime.textContent = `Заезд после ${getRandomOffer().offer.checkin}, выезд до ${getRandomOffer().offer.checkout}`
+  cardTime.textContent = `Заезд после ${offerItem.offer.checkin}, выезд до ${offerItem.offer.checkout}`
 
   // Avatar
-  if (getRandomOffer().author.avatar === '') {
+  if (offerItem.author.avatar === '') {
     cardAvatar.style.display = 'none'
   }
-  cardAvatar.setAttribute('src', getRandomOffer().author.avatar )
+  cardAvatar.setAttribute('src', offerItem.author.avatar )
 
 
   // Features
   cardFeatures.textContent = ''
-  if(getRandomOffer().offer.features === null){
+  if(offerItem.offer.features === null){
     cardFeatures.style.display = 'none'
   }
-  getRandomOffer().offer.features.forEach( feature => {
+  offerItem.offer.features.forEach( feature => {
     let newFeature = document.createElement('li')
     newFeature.classList.add('popup__feature', `popup__feature--${feature}`)
     cardFeatures.appendChild(newFeature)
   });
 
   //Description
-  if(getRandomOffer().offer.description === null){
+  if(offerItem.offer.description === null){
     cardDescription.style.display = 'none'
   }
 
-  cardDescription.textContent = getRandomOffer().offer.description
+  cardDescription.textContent = offerItem.offer.description
 
   // Photos
   cardPhotos.textContent = ''
 
-  if (getRandomOffer().offer.photos === null) {
+  if (offerItem.offer.photos === null) {
     cardPhotos.style.display = 'none'
   }
-  getRandomOffer().offer.photos.forEach( photo  => {
+  offerItem.offer.photos.forEach( photo  => {
     let newPhoto = cardPhoto.cloneNode(true)
     newPhoto.setAttribute('src', photo)
     cardPhotos.appendChild(newPhoto)

@@ -1,11 +1,7 @@
 /* global L:readonly */
-
-import{generateSimilarOffer} from './generate-similar-offer.js'
-import {offer} from './get-random-offer.js'
-import './filter-handler.js'
-import './form-handler.js'
-import { toggleUserFormState } from './form-handler.js'
-import { toggleMapFilterState } from './filter-handler.js'
+import { toggleUserFormState } from './toggle-state.js'
+import { toggleMapFilterState } from './toggle-state.js'
+import {generateSimilarOffer} from './generate-similar-offer.js'
 
 const defaultLocation = {
   x: 35.6895000,
@@ -17,8 +13,6 @@ const addressFloatLength = 5
 
 const mapContainer = document.querySelector('#map-canvas')
 const addressInput = document.querySelector('#address')
-
-addressInput.setAttribute('readonly', '')
 
 const onMapLoad = () => {
   toggleMapFilterState(),
@@ -52,25 +46,28 @@ let tileLayer = L.tileLayer(
 
 tileLayer.addTo(map)
 
-offer.forEach((offerItem) => {
-  const pinMarker = L.marker(
-    {
-      lat: offerItem.location.x,
-      lng: offerItem.location.y,
-    },
+const setMarkers = (offers) => {
 
-    {
-      icon: pinIcon,
-      keepInView: true,
-    },
-  )
+  offers.forEach((offerItem) => {
+    const pinMarker = L.marker(
+      {
+        lat: offerItem.location.lat,
+        lng: offerItem.location.lng,
+      },
 
-  pinMarker
-    .addTo(map)
-  pinMarker.on('click', () => {
-    pinMarker.bindPopup(generateSimilarOffer())
+      {
+        icon: pinIcon,
+        keepInView: true,
+      },
+    )
+
+    pinMarker
+      .addTo(map)
+    pinMarker.on('click', () => {
+      pinMarker.bindPopup(generateSimilarOffer(offerItem))
+    })
   })
-})
+}
 
 const mainPinMarker = L.marker(
   {
@@ -90,5 +87,11 @@ mainPinMarker.on('move', (evt) => {
   addressInput.value =`${(evt.target.getLatLng().lat).toFixed(addressFloatLength)}, ${(evt.target.getLatLng().lng).toFixed(addressFloatLength)}`;
 });
 
-export { map }
+const resetMap = () => {
+  mainPinMarker.setLatLng([defaultLocation.x, defaultLocation.y])
+  addressInput.setAttribute('value', `${defaultLocation.x}, ${defaultLocation.y}`)
+  map.setView([defaultLocation.x, defaultLocation.y], zoom)
+}
+
+export { map, setMarkers, resetMap }
 

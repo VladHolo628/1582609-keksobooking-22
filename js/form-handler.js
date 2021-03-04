@@ -1,3 +1,7 @@
+import {resetMapFilter} from './filter-handler.js'
+import { resetMap } from './map.js'
+import { showErrorModal, showSuccesModal } from './user-modal.js'
+
 const roomsAndPrices = {
   'bungalow': 0,
   'flat': 1000,
@@ -6,11 +10,12 @@ const roomsAndPrices = {
 };
 
 const userForm = document.querySelector('.ad-form')
+const addressInput = userForm.querySelector('input[name="address"]')
 const apartamentInput = userForm.querySelector('select[name="type"]')
 const priceInput = userForm.querySelector('input[name="price"]')
 const checkInInput = userForm.querySelector('select[name="timein"]')
 const checkOutInput = userForm.querySelector('select[name="timeout"]')
-const userFormFieldsets = userForm.querySelectorAll('fieldset')
+addressInput.setAttribute('readonly', '')
 
 priceInput.placeholder = roomsAndPrices[apartamentInput.value]
 priceInput.min = roomsAndPrices[apartamentInput.value]
@@ -28,11 +33,39 @@ checkOutInput.addEventListener('change', function () {
   checkInInput.selectedIndex = checkOutInput.selectedIndex;
 });
 
-const toggleUserFormState = () =>{
-  userForm.classList.toggle('ad-form--disabled')
-  userFormFieldsets.forEach( fieldset => {
-    fieldset.toggleAttribute('disabled', '')
-  })
+const clearUserForm = () => {
+  resetMapFilter()
+  userForm.reset()
+  resetMap()
 }
 
-export {toggleUserFormState}
+const setUserFormSubmit = (onSuccess) => {
+  userForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const formData = new FormData(evt.target);
+
+    fetch(
+      'https://22.javascript.pages.academy/keksobooking',
+      {
+        method: 'POST',
+        body: formData,
+      },
+    )
+      .then((response) => {
+        if(response.ok){
+          showSuccesModal()
+          onSuccess()
+        }else{
+          showErrorModal()
+        }
+      })
+      .catch(() => showErrorModal())
+  });
+}
+
+userForm.addEventListener('reset' , () => {
+  resetMap()
+  resetMapFilter()
+})
+export { setUserFormSubmit, clearUserForm }
