@@ -1,3 +1,5 @@
+const mapContainer = document.querySelector('#map-canvas')
+
 const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
 
 const getRandomNumberWithFloat = (min, max, floatSigns) => parseFloat((Math.random() * (max - min) + min).toFixed(floatSigns))
@@ -38,6 +40,30 @@ const getRandomLocation =  (minX, maxX, minY, maxY, floatSigns = 5) => {
 
 const getRandomLocationToString = (func) => Object.values(func).join(', ')
 
+const showError = (message) => {
+  const errorContainer = document.createElement('div');
+  errorContainer.style.zIndex = 99999999;
+  errorContainer.style.position = 'absolute';
+  errorContainer.style.width = '80%';
+  errorContainer.style.left = 0;
+  errorContainer.style.right = 0;
+  errorContainer.style.margin = '0 auto'
+  errorContainer.style.padding = '6px 3px';
+  errorContainer.style.fontSize = '20px';
+  errorContainer.style.textAlign = 'center';
+  errorContainer.style.backgroundColor = 'white';
+  errorContainer.style.boxShadow = '0px 10px 13px -7px #000000'
+
+  errorContainer.textContent = message;
+
+  mapContainer.append(errorContainer);
+
+}
+
+const isEscEvent = (evt) => {
+  return evt.key === ('Escape' || 'Esc');
+};
+
 export { getRandomNumber, getRandomNumberWithFloat, addZeroes, getRandomNumberWithZeroes,
   getRandomArrayElement, createUniqueArray, createRandomLengthArrayUnique, createRandomLengthArray,
-  getRandomLocation, getRandomLocationToString }
+  getRandomLocation, getRandomLocationToString, showError, isEscEvent }
