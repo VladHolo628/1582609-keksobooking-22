@@ -1,10 +1,11 @@
 import {resetMapFilter} from './filter-handler.js'
 import { resetMap } from './map.js'
-import { showErrorModal, showSuccesModal } from './user-modal.js'
+import { sendFormData } from './api.js'
 
 const MIN_TITLE_LENGTH = 30
 const MAX_TITLE_LENGTH = 100
 const MAX_PRICE = 1000000
+const MAX_ROOMS_NUMBER = 100
 
 const roomsAndPrices = {
   'bungalow': 0,
@@ -47,13 +48,13 @@ if(guestNumberInput.value > roomNumberInput.value){
 }
 
 guestNumberInput.addEventListener('change',(evt) => {
-  const roomCount = roomNumberInput.value
-  const guestCount = evt.target.value
+  const roomCount = parseInt(roomNumberInput.value)
+  const guestCount = parseInt(evt.target.value)
   if(roomCount < guestCount && guestCount > 0 && roomCount <= 3){
     guestNumberInput.setCustomValidity('Количество гостей не может превышать ' + roomCount)
-  }else if(roomCount == 100 && guestCount > 0){
+  }else if(roomCount === MAX_ROOMS_NUMBER && guestCount > 0){
     guestNumberInput.setCustomValidity('Столько комнат точно не для гостей!')
-  }else if(roomCount < 100 && guestCount == 0){
+  }else if(roomCount < MAX_ROOMS_NUMBER && guestCount === 0){
     guestNumberInput.setCustomValidity('Комнаты не могут быть без гостей!')
   }
   else{
@@ -63,13 +64,13 @@ guestNumberInput.addEventListener('change',(evt) => {
 })
 
 roomNumberInput.addEventListener('change',(evt) => {
-  const roomCount = evt.target.value
-  const guestCount = guestNumberInput.value
+  const roomCount = parseInt(evt.target.value)
+  const guestCount = parseInt(guestNumberInput.value)
   if(roomCount < guestCount && guestCount > 0 && roomCount <= 3){
     guestNumberInput.setCustomValidity('Количество гостей не может превышать ' + roomCount)
-  }else if(roomCount == 100 && guestCount > 0){
+  }else if(roomCount === MAX_ROOMS_NUMBER && guestCount > 0){
     guestNumberInput.setCustomValidity('Столько комнат точно не для гостей!')
-  }else if(roomCount < 100 && guestCount == 0){
+  }else if(roomCount < MAX_ROOMS_NUMBER && guestCount === 0){
     guestNumberInput.setCustomValidity('Комнаты не могут быть без гостей!')
   }
   else{
@@ -96,33 +97,16 @@ const clearUserForm = () => {
   resetMap()
 }
 
-const setUserFormSubmit = (onSuccess) => {
-  userForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
+userForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
 
-    const formData = new FormData(evt.target);
+  const formData = new FormData(evt.target);
 
-    fetch(
-      'https://22.javascript.pages.academy/keksobooking',
-      {
-        method: 'POST',
-        body: formData,
-      },
-    )
-      .then((response) => {
-        if(response.ok){
-          showSuccesModal()
-          onSuccess()
-        }else{
-          showErrorModal()
-        }
-      })
-      .catch(() => showErrorModal())
-  });
-}
+  sendFormData(formData, clearUserForm)
+})
 
 userForm.addEventListener('reset' , () => {
   resetMap()
   resetMapFilter()
 })
-export { setUserFormSubmit, clearUserForm }
+
