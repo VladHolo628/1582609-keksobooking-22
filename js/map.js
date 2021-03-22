@@ -1,11 +1,14 @@
 /* global L:readonly */
 import { toggleUserFormState } from './toggle-state.js'
 import { toggleMapFilterState } from './toggle-state.js'
-import {generateSimilarOffer} from './generate-similar-offer.js'
+import { generateSimilarOffer } from './generate-similar-offer.js'
+import { sortAdverts } from './util.js'
+
+const MAX_ADVERTS = 10;
 
 const defaultLocation = {
   x: 35.6895000,
-  y:139.6917100,
+  y: 139.6917100,
 
 }
 const zoom = 12
@@ -15,11 +18,12 @@ const mapContainer = document.querySelector('#map-canvas')
 const addressInput = document.querySelector('#address')
 
 const onMapLoad = () => {
-  toggleMapFilterState(),
+  toggleMapFilterState()
   toggleUserFormState()
 }
 
-let map = L.map(mapContainer)
+const map = L.map(mapContainer)
+const markersLayer = L.layerGroup()
 
 map.on('load', onMapLoad)
 
@@ -34,7 +38,7 @@ const pinIcon = L.icon({
 const mainPinIcon = L.icon({
   iconUrl: 'img/main-pin.svg',
   iconSize: [52, 52],
-  iconAnchor: [26,52],
+  iconAnchor: [26, 52],
 })
 
 let tileLayer = L.tileLayer(
@@ -47,8 +51,13 @@ let tileLayer = L.tileLayer(
 tileLayer.addTo(map)
 
 const setMarkers = (offers) => {
-
-  offers.forEach((offerItem) => {
+  const sortedOffers = offers
+    .slice()
+    .sort(sortAdverts)
+    .filter((value) => value.filterFlag !== false) // избавление от неподходящих объявлений
+    .slice(0, MAX_ADVERTS);
+  markersLayer.clearLayers()
+  sortedOffers.forEach((offerItem) => {
     const pinMarker = L.marker(
       {
         lat: offerItem.location.lat,
@@ -61,12 +70,12 @@ const setMarkers = (offers) => {
       },
     )
 
-    pinMarker
-      .addTo(map)
     pinMarker.on('click', () => {
       pinMarker.bindPopup(generateSimilarOffer(offerItem))
     })
+    pinMarker.addTo(markersLayer)
   })
+  markersLayer.addTo(map)
 }
 
 const mainPinMarker = L.marker(
@@ -84,7 +93,7 @@ mainPinMarker.addTo(map)
 addressInput.value = `${mainPinMarker.getLatLng().lat}, ${mainPinMarker.getLatLng().lng}`
 
 mainPinMarker.on('move', (evt) => {
-  addressInput.value =`${(evt.target.getLatLng().lat).toFixed(addressFloatLength)}, ${(evt.target.getLatLng().lng).toFixed(addressFloatLength)}`;
+  addressInput.value = `${(evt.target.getLatLng().lat).toFixed(addressFloatLength)}, ${(evt.target.getLatLng().lng).toFixed(addressFloatLength)}`;
 });
 
 const resetMap = () => {
