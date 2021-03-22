@@ -19,13 +19,9 @@ const addZeroes = (n, neededLength = 2) => {
   return n
 }
 
-const getRandomNumberWithZeroes = (min, max) => addZeroes(getRandomNumber(min, max))
-
 const getRandomArrayElement = (arr) => arr[getRandomNumber(0, arr.length - 1)]
 
 const createUniqueArray = (arr) => Array.from(new Set(arr))
-
-const createRandomLengthArrayUnique = (arr) => createUniqueArray(createRandomLengthArray(arr, arr.length))
 
 const createRandomLengthArray = (arr, maxLength) => {
   let createdArray = [];
@@ -37,15 +33,6 @@ const createRandomLengthArray = (arr, maxLength) => {
 
   return createdArray;
 };
-
-const getRandomLocation = (minX, maxX, minY, maxY, floatSigns = 5) => {
-  return {
-    x: getRandomNumberWithFloat(minX, maxX, floatSigns),
-    y: getRandomNumberWithFloat(minY, maxY, floatSigns),
-  }
-}
-
-const getRandomLocationToString = (func) => Object.values(func).join(', ')
 
 const showError = (message) => {
   const errorContainer = document.createElement('div');
@@ -145,7 +132,7 @@ const sortAdverts = (advertA, advertB) => {
 }
 
 export {
-  getRandomNumber, getRandomNumberWithFloat, addZeroes, getRandomNumberWithZeroes,
-  getRandomArrayElement, createUniqueArray, createRandomLengthArrayUnique, createRandomLengthArray,
-  getRandomLocation, getRandomLocationToString, showError, isEscEvent, sortAdverts
+  getRandomNumber, getRandomNumberWithFloat, addZeroes,
+  getRandomArrayElement, createUniqueArray, createRandomLengthArray,
+  showError, isEscEvent, sortAdverts
 }
