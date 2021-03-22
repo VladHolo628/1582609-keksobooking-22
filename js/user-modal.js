@@ -11,18 +11,19 @@ const showSuccesModal = () => {
 
   const shownModal = document.querySelector('.success')
 
-  if(shownModal.style.display === 'none'){
+  if (shownModal.style.display === 'none') {
     shownModal.style.display = ''
   }
 
   window.addEventListener('click', () => {
-    shownModal.style.display ='none'
-  },{once:true})
+    shownModal.style.display = 'none'
+  }, { once: true })
 
   window.addEventListener('keydown', (evt) => {
-    if(isEscEvent(evt))
-      shownModal.style.display ='none'
-  },{once:true})
+    if (isEscEvent(evt)) {
+      shownModal.style.display = 'none'
+    }
+  }, { once: true })
 }
 
 const showErrorModal = () => {
@@ -30,22 +31,23 @@ const showErrorModal = () => {
 
   const shownModal = document.querySelector('.error')
 
-  if(shownModal.style.display === 'none'){
+  if (shownModal.style.display === 'none') {
     shownModal.style.display = ''
   }
 
   errorModalCloseButton.addEventListener('click', () => {
-    shownModal.style.display ='none'
-  },{once:true})
+    shownModal.style.display = 'none'
+  }, { once: true })
 
   window.addEventListener('click', () => {
-    shownModal.style.display ='none'
-  },{once:true})
+    shownModal.style.display = 'none'
+  }, { once: true })
 
   window.addEventListener('keydown', (evt) => {
-    if(isEscEvent(evt))
-      shownModal.style.display ='none'
-  },{once:true})
+    if (isEscEvent(evt)) {
+      shownModal.style.display = 'none'
+    }
+  }, { once: true })
 }
 
 export { showSuccesModal, showErrorModal }
