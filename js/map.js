@@ -18,8 +18,8 @@ const mapContainer = document.querySelector('#map-canvas')
 const addressInput = document.querySelector('#address')
 
 const onMapLoad = () => {
-  toggleMapFilterState(),
-    toggleUserFormState()
+  toggleMapFilterState()
+  toggleUserFormState()
 }
 
 const map = L.map(mapContainer)
