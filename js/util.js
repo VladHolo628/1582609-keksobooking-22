@@ -36,11 +36,11 @@ const createRandomLengthArray = (arr, maxLength) => {
 
 const showError = (message) => {
   const errorContainer = document.createElement('div');
-  errorContainer.style.zIndex = 99999999;
+  errorContainer.style.zIndex = '99999999';
   errorContainer.style.position = 'absolute';
   errorContainer.style.width = '80%';
-  errorContainer.style.left = 0;
-  errorContainer.style.right = 0;
+  errorContainer.style.left = '0';
+  errorContainer.style.right = '0';
   errorContainer.style.margin = '0 auto'
   errorContainer.style.padding = '6px 3px';
   errorContainer.style.fontSize = '20px';

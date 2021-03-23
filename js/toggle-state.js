@@ -4,19 +4,19 @@ const mapFilter = document.querySelector('.map__filters')
 const mapFilterItems = mapFilter.querySelectorAll('.map__filter')
 const mapFilterFeatures = mapFilter.querySelector('.map__features')
 
-const toggleUserFormState = () =>{
+const toggleUserFormState = () => {
   userForm.classList.toggle('ad-form--disabled')
-  userFormFieldsets.forEach( fieldset => {
-    fieldset.toggleAttribute('disabled', '')
+  userFormFieldsets.forEach(fieldset => {
+    fieldset.toggleAttribute('disabled')
   })
 }
 
 const toggleMapFilterState = () => {
   mapFilter.classList.toggle('map__filters--disabled')
   mapFilterItems.forEach(item => {
-    item.toggleAttribute('disabled', '')
+    item.toggleAttribute('disabled')
   })
-  mapFilterFeatures.toggleAttribute('disabled', '')
+  mapFilterFeatures.toggleAttribute('disabled')
 }
 
 export { toggleUserFormState, toggleMapFilterState }
