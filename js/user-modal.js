@@ -6,7 +6,7 @@ const errorModal = errorModalTemplate.cloneNode(true)
 const successModal = successModalTemplate.cloneNode(true)
 const errorModalCloseButton = errorModal.querySelector('.error__button')
 
-const showSuccesModal = () => {
+const showSuccessModal = () => {
   pageMain.appendChild(successModal)
 
   const shownModal = document.querySelector('.success')
@@ -50,4 +50,4 @@ const showErrorModal = () => {
   }, { once: true })
 }
 
-export { showSuccesModal, showErrorModal }
+export { showSuccessModal, showErrorModal }
